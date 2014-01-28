@@ -48,5 +48,19 @@ describe('dyson.image', function() {
             });
         });
 
+        it('should respond with an image when using query', function(done) {
+
+            var app = express();
+
+            app.get('/image/*', image.asMiddleware);
+
+            request(app).get('/image/?width=100&height=100').end(function(errors, res) {
+
+                res.headers['content-type'].should.equal('image/jpeg');
+                done();
+
+            });
+        });
+
     });
 });

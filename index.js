@@ -25,13 +25,6 @@ var imageRequest = function(options) {
 
     if(options.path) {
         uri += options.path;
-    } else {
-        if(options.width) {
-            uri += '/' + options.width;
-        } 
-        if(options.height) {
-            uri += '/' + options.height;
-        }
     }
 
     request({
@@ -66,15 +59,19 @@ var imageRequest = function(options) {
 
 var asMiddleware = function(req, res, next) {
 
-    var path = req.url.replace('/image', '');
+    var path = req.path.replace('/image', '');
 
-    log('[dyson-lorempixel] Resolving response for', req.url, imageCache[path] ? '(cached)' : '');
-
-    if(!imageCache[path]) {
-        imageCache[path] = imageRequest({path: path});
+    if (req.query.width && req.query.height) {
+        path += req.query.width + '/' + req.query.height + '/'
     }
 
-    imageCache[path].then(function(image) {
+    log('[dyson-lorempixel] Resolving response for', req.url, imageCache[req.url] ? '(cached)' : '');
+
+    if(!imageCache[req.url]) {
+        imageCache[req.url] = imageRequest({path: path});
+    }
+
+    imageCache[req.url].then(function(image) {
         res.setHeader('Content-Type', image.mimeType);
         res.write(image.buffer);
         res.send();
