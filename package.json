@@ -1,5 +1,5 @@
 {
-    "name": "dyson-image",
+    "name": "dyson-lorempixel",
     "version": "0.1.3",
     "description": "Image proxy and base64 generator for dyson",
     "keywords": ["JSON", "data", "dynamic", "dummy", "fake", "response", "server", "API", "REST", "generator", "image", "base64"],
@@ -22,7 +22,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/webpro/dyson-image"
+        "url": "https://github.com/ropez/dyson-lorempixel"
     },
     "engines": {
         "node": ">=0.8"
