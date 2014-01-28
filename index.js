@@ -19,16 +19,19 @@ var imageRequest = function(options) {
 
     options = options || {};
 
-    var host = options.host || 'http://dummyimage.com',
+    var host = options.host || 'http://lorempixel.com',
         uri = host,
         deferred = when.defer();
 
     if(options.path) {
         uri += options.path;
-    } else if(options.width && options.height) {
-        uri += '/' + options.width + 'x' + options.height;
-    } else if(options.width) {
-        uri += '/' + options.width;
+    } else {
+        if(options.width) {
+            uri += '/' + options.width;
+        } 
+        if(options.height) {
+            uri += '/' + options.height;
+        }
     }
 
     request({
@@ -65,7 +68,7 @@ var asMiddleware = function(req, res, next) {
 
     var path = req.url.replace('/image', '');
 
-    log('[dyson-image] Resolving response for', req.url, imageCache[path] ? '(cached)' : '');
+    log('[dyson-lorempixel] Resolving response for', req.url, imageCache[path] ? '(cached)' : '');
 
     if(!imageCache[path]) {
         imageCache[path] = imageRequest({path: path});
