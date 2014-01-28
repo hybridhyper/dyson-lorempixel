@@ -40,9 +40,9 @@ describe('dyson.image', function() {
 
             app.get('/image/*', image.asMiddleware);
 
-            request(app).get('/image/300x200').end(function(errors, res) {
+            request(app).get('/image/100/100/').end(function(errors, res) {
 
-                res.headers['content-type'].should.equal('image/png');
+                res.headers['content-type'].should.equal('image/jpeg');
                 done();
 
             });

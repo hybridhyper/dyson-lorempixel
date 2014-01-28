@@ -39,11 +39,9 @@ var imageRequest = function(options) {
         encoding: 'binary'
     }, function(error, response, body) {
 
-        if(error) {
+        if(error || response.statusCode !== 200) {
             deferred.reject(error);
-        }
-
-        if(!error && response.statusCode === 200) {
+        } else {
 
             var imageBuffer = new Buffer(body, 'binary');
 
@@ -51,12 +49,14 @@ var imageRequest = function(options) {
 
                 if(error) {
                     deferred.reject(error);
+                } else if(!result) {
+                    deferred.reject("not an image");
+                } else {
+                    deferred.resolve({
+                        mimeType: result.mime,
+                        buffer: imageBuffer
+                    });
                 }
-
-                deferred.resolve({
-                    mimeType: result.mime,
-                    buffer: imageBuffer
-                });
             });
         }
     });
