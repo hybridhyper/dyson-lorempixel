@@ -54,7 +54,7 @@ describe('dyson.image', function() {
 
             app.get('/image/*', image.asMiddleware);
 
-            request(app).get('/image/?width=100&height=100').end(function(errors, res) {
+            request(app).get('/image/sports?width=100&height=100').end(function(errors, res) {
 
                 res.headers['content-type'].should.equal('image/jpeg');
                 done();

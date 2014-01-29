@@ -62,7 +62,7 @@ var asMiddleware = function(req, res, next) {
     var path = req.path.replace('/image', '');
 
     if (req.query.width && req.query.height) {
-        path += req.query.width + '/' + req.query.height + '/'
+        path = '/' + req.query.width + '/' + req.query.height + path;
     }
 
     log('[dyson-lorempixel] Resolving response for', req.url, imageCache[req.url] ? '(cached)' : '');
